@@ -67,4 +67,5 @@ public class BasicJava {
             X[i] = X[i]*X[i];
         }
     }
+    
 }

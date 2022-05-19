@@ -27,9 +27,9 @@ public class App {
         // System.out.println(bJ.mayorQueY(test_mayorqueY, 10));
 
         int[] test_valoresalcuadrado = {1,2,3,4};
-        System.out.println(test_valoresalcuadrado);
         bJ.valoresAlCuadrado(test_valoresalcuadrado);
         System.out.println(Arrays.toString(test_valoresalcuadrado));
-
+        
+        
     }
 }
