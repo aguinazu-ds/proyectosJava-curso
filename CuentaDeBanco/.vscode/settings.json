@@ -3,5 +3,35 @@
     "java.project.outputPath": "bin",
     "java.project.referencedLibraries": [
         "lib/**/*.jar"
+    ],
+    "cSpell.words": [
+        "Acumulado",
+        "Ahorro",
+        "Ahorros",
+        "Aleatorio",
+        "Bancaria",
+        "cantidad",
+        "Corriente",
+        "Creada",
+        "Creadas",
+        "cuenta",
+        "Cuenta",
+        "Cuentas",
+        "depositar",
+        "Dinero",
+        "elige",
+        "incorrecta",
+        "incorrecto",
+        "ingresado",
+        "insuficiente",
+        "Nueva",
+        "numero",
+        "Numero",
+        "numeros",
+        "retirar",
+        "saldo",
+        "Saldo",
+        "tipo",
+        "Tipo"
     ]
 }
