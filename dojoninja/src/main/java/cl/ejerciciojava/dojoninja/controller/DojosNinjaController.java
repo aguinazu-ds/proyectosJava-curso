@@ -16,7 +16,6 @@ import cl.ejerciciojava.dojoninja.services.DojoService;
 import cl.ejerciciojava.dojoninja.services.NinjaService;
 
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class DojosNinjaController {
