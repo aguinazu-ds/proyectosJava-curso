@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+ <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">   
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title th:text="${titulo}"></title>
+</head>
+<body>
+	<div class="container">
+	<h2 th:text="${titulo}"></h2>
+	<br />
+	
+	<div>
+		<select name="marca" id="marca" title="Seleccione una Marca de auto">
+			<option value="" disabled="disabled" selected>-- Seleccionar Marca --</option>
+			<option th:each="mar:${marcas}" 
+				th:value="${mar.id}"
+				th:text="${mar.descripcion}"/>
+		</select> 
+		<label class="text-primary" 
+			style="font-size: 17px;">Marca</label>
+	</div>
+	<br/>
+	
+	<div>
+		<select name="modelo" id="modelo" title="Seleccione un Modelo de auto">
+			<option value="" disabled="disabled" selected="selected" >--Seleccionar Modelo--</option>
+			<option th:each="mode:${modelos}" 
+				th:value="${mode.id}"
+				th:text="${mode.descripcion}" />
+		</select> 
+		<label class="text-primary"
+			style="font-size: 17px;">Modelo</label>
+	</div>
+</div>
+
+<script th:src="@{/js/jquery.min.js}"></script>
+
+	<script th:inline="javascript">
+	/* Variable Javascript que guarda el contextPath para formar la URL a la cual haremos la peticion*/
+	var contextPath = /*[[@{http://localhost:8080/buscarPorMarca}]]*/
+	console.log(contextPath);
+
+	$('#marca').change(
+			function() {				
+				$.getJSON(contextPath,
+								{
+									idMarca : $(this).val(),
+									ajax : 'true'
+								},
+								function(data) {
+									var html = '<option value="">--Seleccione Modelo--</option>';
+									var len = data.length;
+									for (var i = 0; i < len; i++) {
+										html += '<option value="' + data[i].id + '">'
+												+ data[i].descripcion
+												+ '</option>';
+									}
+									html += '</option>';
+									$('#modelo').html(html);
+								});
+			});
+	</script>
+
+</body>
+</html>
