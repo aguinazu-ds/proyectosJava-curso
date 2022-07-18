@@ -4,14 +4,10 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "tutor")
 public class Tutor {
     @Id
@@ -35,4 +31,20 @@ public class Tutor {
     private Comuna comuna;
     @OneToMany(mappedBy = "tutor", fetch = FetchType.LAZY)
     private List<CursoModuloTutor> cursosModulosTutores;
+
+    public Tutor() {
+    }
+
+    public Tutor(String rut, String nombre, String apellido_pat, String apellido_mat, String direccion, String cargo,
+            Comuna comuna, List<CursoModuloTutor> cursosModulosTutores) {
+        this.rut = rut;
+        this.nombre = nombre;
+        this.apellido_pat = apellido_pat;
+        this.apellido_mat = apellido_mat;
+        this.direccion = direccion;
+        this.cargo = cargo;
+        this.comuna = comuna;
+        this.cursosModulosTutores = cursosModulosTutores;
+    }
+
 }

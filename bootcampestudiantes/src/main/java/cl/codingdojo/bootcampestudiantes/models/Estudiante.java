@@ -4,14 +4,10 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "estudiante")
 public class Estudiante implements Comparable<Estudiante> {
     @Id
@@ -36,6 +32,20 @@ public class Estudiante implements Comparable<Estudiante> {
     @JoinColumn(name = "codigo_comuna")
     @JsonIgnore
     private Comuna comuna;
+
+    public Estudiante() {
+    }
+
+    public Estudiante(String rut, String nombre, String apellido_pat, String apellido_mat, String direccion,
+            Curso curso, Comuna comuna) {
+        this.rut = rut;
+        this.nombre = nombre;
+        this.apellido_pat = apellido_pat;
+        this.apellido_mat = apellido_mat;
+        this.direccion = direccion;
+        this.curso = curso;
+        this.comuna = comuna;
+    }
 
     @Override
     public int compareTo(Estudiante e) {

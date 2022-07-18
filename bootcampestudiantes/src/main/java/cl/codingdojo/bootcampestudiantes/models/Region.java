@@ -4,14 +4,10 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "region")
 public class Region {
     @Id
@@ -22,4 +18,13 @@ public class Region {
     private String nombre;
     @OneToMany(mappedBy = "region", fetch = FetchType.LAZY)
     private List<Comuna> comunas;
+
+    public Region() {
+    }
+
+    public Region(String nombre, List<Comuna> comunas) {
+        this.nombre = nombre;
+        this.comunas = comunas;
+    }
+
 }

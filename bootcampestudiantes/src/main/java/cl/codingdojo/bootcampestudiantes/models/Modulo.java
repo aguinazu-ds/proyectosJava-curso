@@ -4,14 +4,10 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "modulo")
 public class Modulo {
     @Id
@@ -24,4 +20,16 @@ public class Modulo {
     private List<PlanModulo> planesModulos;
     @OneToMany(mappedBy = "modulo", fetch = FetchType.LAZY)
     private List<CursoModuloTutor> cursosModulosTutores;
+
+    public Modulo() {
+    }
+
+    public Modulo(String descripcion, Integer duracion_horas, List<PlanModulo> planesModulos,
+            List<CursoModuloTutor> cursosModulosTutores) {
+        this.descripcion = descripcion;
+        this.duracion_horas = duracion_horas;
+        this.planesModulos = planesModulos;
+        this.cursosModulosTutores = cursosModulosTutores;
+    }
+
 }

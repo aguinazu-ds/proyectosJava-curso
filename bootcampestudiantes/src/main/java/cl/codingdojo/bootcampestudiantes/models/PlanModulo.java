@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "plan_modulo")
 public class PlanModulo implements Serializable {
     @Id
