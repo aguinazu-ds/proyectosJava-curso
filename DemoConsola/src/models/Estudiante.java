@@ -1,11 +1,5 @@
 package models;
 
-import java.text.ParseException;
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-
 public class Estudiante {
     private int id_estudiante;
     private String rut;
@@ -16,6 +10,10 @@ public class Estudiante {
     private String fecha_nacimiento;
 
     public Estudiante() {
+    }
+
+    public Estudiante(String fecha_nacimiento) {
+        this.fecha_nacimiento = fecha_nacimiento;
     }
 
     public Estudiante(int id_estudiante, String rut, String nombre, String apellido_pat, String apellido_mat,
@@ -29,19 +27,20 @@ public class Estudiante {
         this.fecha_nacimiento = fecha_nacimiento;
     }
 
-    public Integer calcular_edad(String fechaNacimientoString) {
-        LocalDate fechaHoy = LocalDate.now(ZoneId.systemDefault());
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate fechaNacimiento = LocalDate.now(ZoneId.systemDefault());
-        try {
-            fechaNacimiento = LocalDate.parse(fechaNacimientoString, formatter);
-        } catch (Exception e) {
-            System.out.println("Ingresa el formato correcto de fecha dd/MM/yyyy (ej. 02/07/1990)");
-            System.out.println(e);
-            return null;
-        }
-        return Period.between(fechaNacimiento, fechaHoy).getYears();
-    }
+    // public Integer calcular_edad(String fechaNacimientoString) {
+    // LocalDate fechaHoy = LocalDate.now(ZoneId.systemDefault());
+    // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    // LocalDate fechaNacimiento = LocalDate.now(ZoneId.systemDefault());
+    // try {
+    // fechaNacimiento = LocalDate.parse(fechaNacimientoString, formatter);
+    // } catch (Exception e) {
+    // System.out.println("Ingresa el formato correcto de fecha dd/MM/yyyy (ej.
+    // 02/07/1990)");
+    // System.out.println(e);
+    // return null;
+    // }
+    // return Period.between(fechaNacimiento, fechaHoy).getYears();
+    // }
 
     public int getId_estudiante() {
         return this.id_estudiante;
