@@ -1,6 +1,7 @@
 package cl.codingdojo.bootcampestudiantes.controllers;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -61,7 +62,7 @@ public class BootcampController {
             estudiantesFiltrados
                     .addAll(estudianteService.findEstudiantesByCursoYRegion(codigo_curso, comuna.getCodigo_comuna()));
         }
-
+        Collections.sort(estudiantesFiltrados);
         model.addAttribute("estudiantesFiltrados", estudiantesFiltrados);
         model.addAttribute("codigo_curso", codigo_curso);
         model.addAttribute("regiones", regiones);

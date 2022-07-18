@@ -1,10 +1,5 @@
 package cl.codingdojo.bootcampestudiantes.models;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
-
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -18,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "estudiante")
-public class Estudiante {
+public class Estudiante implements Comparable<Estudiante> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_estudiante;
@@ -41,5 +36,10 @@ public class Estudiante {
     @JoinColumn(name = "codigo_comuna")
     @JsonIgnore
     private Comuna comuna;
+
+    @Override
+    public int compareTo(Estudiante e) {
+        return this.getId_estudiante().compareTo(e.getId_estudiante());
+    }
 
 }
