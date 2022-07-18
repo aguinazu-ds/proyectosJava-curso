@@ -10,7 +10,7 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="container vh-100 overflow-hidden">
+    <div class="container vh-100 ">
         <div class="">
             <div class="col-12 p-3">
             
@@ -52,7 +52,7 @@
                 </div>
                 </form:form>
             </div>
-            <div class="col-12 p-3 table-responsive">
+            <div class="col-12 p-3 table-responsive overflow-visible">
                 <table class="table table-responsive table-sm table-bordered">
                     <thead class="text-center">
                         <tr>
