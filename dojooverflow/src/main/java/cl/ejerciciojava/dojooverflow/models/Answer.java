@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 @Entity
@@ -29,6 +31,11 @@ public class Answer {
     private Question question;
 
     public Answer() {
+    }
+
+    public Answer(String answer, Question question) {
+        this.answer = answer;
+        this.question = question;
     }
 
     public Answer(String answer, Date createdAt, Date updatedAt, Question question) {
@@ -76,6 +83,16 @@ public class Answer {
 
     public void setQuestion(Question question) {
         this.question = question;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = new Date();
     }
 
 }

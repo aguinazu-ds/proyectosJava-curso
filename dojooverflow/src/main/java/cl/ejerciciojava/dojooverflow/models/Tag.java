@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 @Entity
@@ -31,6 +33,10 @@ public class Tag {
     private List<Question> questions;
 
     public Tag() {
+    }
+
+    public Tag(String subject) {
+        this.subject = subject;
     }
 
     public Tag(String subject, Date createdAt, Date updatedAt, List<Question> questions) {
@@ -78,6 +84,16 @@ public class Tag {
 
     public void setQuestions(List<Question> questions) {
         this.questions = questions;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = new Date();
     }
 
 }
