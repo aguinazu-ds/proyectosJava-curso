@@ -8,8 +8,9 @@ import org.springframework.stereotype.Repository;
 import cl.ejerciciojava.adminpanel.models.Role;
 
 @Repository
-public interface RoleRepository extends CrudRepository<Role, Long> {
+public interface RoleRepo extends CrudRepository<Role, Long> {
     List<Role> findAll();
 
-    List<Role> findByName(String name);
+    Role findByType(String type);
+
 }

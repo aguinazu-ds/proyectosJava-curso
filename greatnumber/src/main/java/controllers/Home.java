@@ -11,30 +11,35 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet("/home")
+@WebServlet("/")
 public class Home extends HttpServlet {
     private static final long serialVersionUID = 1L;
+
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
     public Home() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
-        
-        if (session.getAttribute("randomNumber") == null) {
-            int randomNumber = ThreadLocalRandom.current().nextInt(1,101);
-            req.setAttribute("randomNumber", randomNumber);
-            session.setAttribute("randomNumber", randomNumber);
-        }
-
-        RequestDispatcher view = req.getRequestDispatcher("/WEB-INF/views/home.jsp");
-        view.forward(req, resp);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    /**
+     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+     *      response)
+     */
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         // TODO Auto-generated method stub
-        super.doPost(req, resp);
+        request.getRequestDispatcher("/WEB-INF/views/teamList.jsp").forward(request, response);
+    }
+
+    /**
+     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+     *      response)
+     */
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // TODO Auto-generated method stub
+        doGet(request, response);
     }
 }

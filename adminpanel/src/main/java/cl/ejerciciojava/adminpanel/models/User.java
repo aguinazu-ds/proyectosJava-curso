@@ -7,7 +7,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -16,47 +15,42 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "users")
 public class User {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
-    @Size(min = 2, max = 255) // extra
-    private String firstName;// extra
-    @Size(min = 2, max = 255) // extra
-    private String lastName;// extra
-    @Email // extra
+    @Email(message = "Invalid email format. Ex: user@user.com")
     private String email;
-    @Size(min = 8, message = "Password must be greater than 8 characters")
+    @Size(min = 1, max = 64, message = "Password must be 8-16 characters in length")
+    private String first;
+    @Size(min = 1, max = 64)
+    private String last;
+    @Size(min = 8)
     private String password;
     @Transient
-    private String passwordConfirmation;
+    @Size(min = 8)
+    private String confirm;
+    @Column(updatable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date createdAt;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date updatedAt;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date lastSignIn;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
 
-    @DateTimeFormat(pattern = "MM/dd/yyyy HH:mm:ss") // extra
-    private Date createdAt;
-
-    @DateTimeFormat(pattern = "MM/dd/yyyy HH:mm:ss") // extra
-    private Date updatedAt;
-
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = new Date();
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        this.updatedAt = new Date();
-    }
-
     public User() {
+        this.updatedAt = new Date();
     }
 
     public Long getId() {
@@ -67,20 +61,20 @@ public class User {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFirst() {
+        return first;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFirst(String first) {
+        this.first = first;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getLast() {
+        return last;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setLast(String last) {
+        this.last = last;
     }
 
     public String getEmail() {
@@ -99,20 +93,12 @@ public class User {
         this.password = password;
     }
 
-    public String getPasswordConfirmation() {
-        return passwordConfirmation;
+    public String getConfirm() {
+        return confirm;
     }
 
-    public void setPasswordConfirmation(String passwordConfirmation) {
-        this.passwordConfirmation = passwordConfirmation;
-    }
-
-    public List<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
+    public void setConfirm(String confirm) {
+        this.confirm = confirm;
     }
 
     public Date getCreatedAt() {
@@ -129,5 +115,31 @@ public class User {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Date getLastSignIn() {
+        return lastSignIn;
+    }
+
+    public void setLastSignIn(Date lastSignIn) {
+        this.lastSignIn = lastSignIn;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = new Date();
     }
 }

@@ -1,5 +1,7 @@
 package cl.ejerciciojava.adminpanel.services;
 
+import cl.ejerciciojava.adminpanel.models.Role;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -8,73 +10,82 @@ import java.util.Optional;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import cl.ejerciciojava.adminpanel.models.Role;
 import cl.ejerciciojava.adminpanel.models.User;
-import cl.ejerciciojava.adminpanel.repositories.RoleRepository;
-import cl.ejerciciojava.adminpanel.repositories.UserRepository;
+import cl.ejerciciojava.adminpanel.repositories.RoleRepo;
+import cl.ejerciciojava.adminpanel.repositories.UserRepo;
 
 @Service
 public class UserService {
-    private UserRepository userRepository;
-    private RoleRepository roleRepository;
+    private UserRepo uRepo;
+    private RoleRepo rRepo;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public UserService(UserRepository userRepository, RoleRepository roleRepository,
-            BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
+    public UserService(UserRepo uRepo, RoleRepo rRepo, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.uRepo = uRepo;
+        this.rRepo = rRepo;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    // 1
-    public void saveWithUserRole(User user) {
+    public void savePleb(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setRoles(roleRepository.findByName("ROLE_USER"));
-        userRepository.save(user);
-    }
-
-    // 2
-    public void saveUserWithAdminRole(User user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setRoles(roleRepository.findByName("ROLE_ADMIN"));
-        userRepository.save(user);
-    }
-
-    // 3
-    public User findByUsername(String username) {
-        return userRepository.findByUsername(username);
-    }
-
-    public User findByEmail(String email) {
-        return userRepository.findByEmail(email);
-    }
-
-    public void updateUser(User user) {
-        user.setUpdatedAt(new Date());
-        userRepository.save(user);
-    }
-
-    public List<User> allAdmins() {
-        List<Role> role = roleRepository.findByName("ROLE_ADMIN");
-        return role.get(0).getUsers();
-    }
-
-    public ArrayList<User> allUsers() {
-        return (ArrayList<User>) userRepository.findAll();
-    }
-
-    public void makeAdmin(Long id) {
-        Optional<User> user = userRepository.findById(id);
-        List<Role> roles = roleRepository.findByName("ROLE_ADMIN");
+        ArrayList<Role> roles = new ArrayList<Role>();
+        roles.add(rRepo.findByType("ROLE_USER"));
         user.setRoles(roles);
         uRepo.save(user);
     }
 
-    public User userAt(Long id) {
-        return uRepo.findOne(id);
+    public void saveAdmin(User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        ArrayList<Role> roles = new ArrayList<Role>();
+        roles.add(rRepo.findByType("ROLE_USER"));
+        roles.add(rRepo.findByType("ROLE_ADMIN"));
+        user.setRoles(roles);
+        uRepo.save(user);
     }
 
-    public void destroyUser(Long id) {
-        uRepo.delete(id);
+    public void saveSuper(User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        ArrayList<Role> roles = new ArrayList<Role>();
+        roles.add(rRepo.findByType("ROLE_USER"));
+        roles.add(rRepo.findByType("ROLE_ADMIN"));
+        roles.add(rRepo.findByType("ROLE_SUPER"));
+        user.setRoles(roles);
+        uRepo.save(user);
+    }
+
+    public User findByEmail(String email) {
+        return uRepo.findByEmail(email);
+    }
+
+    public Optional<User> findById(Long id) {
+        return uRepo.findById(id);
+    }
+
+    public List<User> allUsers() {
+        return (List<User>) uRepo.findAll();
+    }
+
+    public void updatePleb(User user) {
+        ArrayList<Role> roles = new ArrayList<Role>();
+        roles.add(rRepo.findByType("ROLE_USER"));
+        user.setRoles(roles);
+        uRepo.save(user);
+    }
+
+    public void updateAdmin(User user) {
+        ArrayList<Role> roles = new ArrayList<Role>();
+        roles.add(rRepo.findByType("ROLE_USER"));
+        roles.add(rRepo.findByType("ROLE_ADMIN"));
+        user.setRoles(roles);
+        uRepo.save(user);
+    }
+
+    public void updateSignIn(User user) {
+        user.setLastSignIn(new Date());
+        uRepo.save(user);
+    }
+
+    public void deleteUser(Long id) {
+        uRepo.deleteById(id);
     }
 }

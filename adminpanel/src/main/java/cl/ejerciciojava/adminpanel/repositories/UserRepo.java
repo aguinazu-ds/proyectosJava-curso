@@ -6,8 +6,6 @@ import org.springframework.stereotype.Repository;
 import cl.ejerciciojava.adminpanel.models.User;
 
 @Repository
-public interface UserRepository extends CrudRepository<User, Long> {
-    User findByUsername(String username);
-
+public interface UserRepo extends CrudRepository<User, Long> {
     User findByEmail(String email);
 }
